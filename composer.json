@@ -1,0 +1,29 @@
+{
+	"name": "nedryse/translateable-template-factory",
+	"type": "library",
+	"description": "Proper way how to load translator into the presenters and controls template in the Nette framework based applications",
+	"keywords": ["nette", "translator", "dry", "nedryse"],
+	"homepage": "https://github.com/nedryse/translateable-template-factory",
+	"license": "WTFPL",
+	"authors": [
+		{
+			"name": "Pavel Železný",
+			"email": "info@pavelzelezny.cz",
+			"homepage": "http://pavelzelezny.cz",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/nedryse/translateable-template-factory/issues"
+	},
+	"require": {
+		"php": ">=5.3.1",
+		"nette/application": "~2.2"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "4.3.*"
+	},
+	"autoload": {
+		"classmap": ["src/"]
+	}
+}
