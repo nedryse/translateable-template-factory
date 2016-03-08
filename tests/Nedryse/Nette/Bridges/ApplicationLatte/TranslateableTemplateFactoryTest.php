@@ -17,21 +17,24 @@ class TranslatableTemplateFactoryTest extends PHPUnit_Framework_TestCase
 
 		/* @var $latteMock Latte\Engine */
 		$latteMock = $this->getMockBuilder('Latte\Engine')
-				->setMethods(array('addFilter'))
-				->getMock();
-		$latteMock->expects($this->at(10))
-				->method('addFilter')
-				->with($this->equalTo('translate'), $this->equalTo(array($translatorMock, 'translate')))
-				->will($this->returnSelf());
+			->setMethods(array('addFilter', 'getFilters'))
+			->getMock();
+		$latteMock->expects($this->once())
+			->method('getFilters')
+			->will($this->returnValue(array()));
+		$latteMock->expects($this->at(12))
+			->method('addFilter')
+			->with($this->equalTo('translate'), $this->equalTo(array($translatorMock, 'translate')))
+			->will($this->returnSelf());
 		$latteMock->onCompile = array();
 
 		/* @var $latteFactroyMock ILatteFactory */
 		$latteFactroyMock = $this->getMockBuilder('Nette\Bridges\ApplicationLatte\ILatteFactory')
-				->setMethods(array('create'))
-				->getMock();
+			->setMethods(array('create'))
+			->getMock();
 		$latteFactroyMock->expects($this->once())
-				->method('create')
-				->will($this->returnValue($latteMock));
+			->method('create')
+			->will($this->returnValue($latteMock));
 
 		$class = new TranslatableTemplateFactory($latteFactroyMock, NULL, NULL, NULL, NULL, $translatorMock);
 		$this->assertInstanceOf('Nette\Bridges\ApplicationLatte\Template', $class->createTemplate($controlMock));

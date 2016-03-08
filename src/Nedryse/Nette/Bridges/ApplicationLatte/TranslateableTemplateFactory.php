@@ -45,7 +45,7 @@ class TranslatableTemplateFactory extends TemplateFactory
 	 * @param Control $control
 	 * @return Template
 	 */
-	public function createTemplate(Control $control)
+	public function createTemplate(Control $control = NULL)
 	{
 		$template = parent::createTemplate($control);
 		$template->setTranslator($this->getTranslator());
