@@ -3,7 +3,7 @@ Pavel Železný (2bfree), 2014 ([pavelzelezny.cz](http://pavelzelezny.cz))
 
 ## Requirements ##
 
-[Nette Framework 2.2.0](http://nette.org) or higher
+[Nette Framework 2.4.0](http://nette.org) or higher
 
 ## Documentation ##
 
@@ -13,13 +13,13 @@ Proper way how to load translator into the presenters and controls template in t
 
 Prefered way to intall is by the [Composer](http://getcomposer.org)
 
-	composer require nedryse/translateable-template-factory:~1.0.0
+	composer require nedryse/translateable-template-factory:~1.1
 
 Or by manualy adding into the [composer.json](https://getcomposer.org/doc/04-schema.md#json-schema)
 
 	{
 		"require":{
-			"nedryse/translateable-template-factory": "~1.0.0"
+			"nedryse/translateable-template-factory": "~1.1"
 		}
 	}
 
