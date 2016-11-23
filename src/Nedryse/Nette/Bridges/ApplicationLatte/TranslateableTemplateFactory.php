@@ -8,7 +8,6 @@ use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Bridges\ApplicationLatte\TemplateFactory;
 use Nette\Caching\IStorage;
 use Nette\Http\IRequest;
-use Nette\Http\IResponse;
 use Nette\InvalidStateException;
 use Nette\Localization\ITranslator;
 use Nette\Security\User;
@@ -27,15 +26,14 @@ class TranslatableTemplateFactory extends TemplateFactory
 	 *
 	 * @param ILatteFactory $latteFactory
 	 * @param IRequest $httpRequest [OPTIONAL]
-	 * @param IResponse $httpResponse [OPTIONAL]
 	 * @param User $user [OPTIONAL]
 	 * @param IStorage $cacheStorage [OPTIONAL]
 	 * @param ITranslator $translator [OPTIONAL]
 	 * @return void
 	 */
-	public function __construct(ILatteFactory $latteFactory, IRequest $httpRequest = NULL, IResponse $httpResponse = NULL, User $user = NULL, IStorage $cacheStorage = NULL, ITranslator $translator = NULL)
+	public function __construct(ILatteFactory $latteFactory, IRequest $httpRequest = NULL, User $user = NULL, IStorage $cacheStorage = NULL, ITranslator $translator = NULL)
 	{
-		parent::__construct($latteFactory, $httpRequest, $httpResponse, $user, $cacheStorage);
+		parent::__construct($latteFactory, $httpRequest, $user, $cacheStorage);
 		$this->setTranslator($translator);
 	}
 
@@ -51,7 +49,6 @@ class TranslatableTemplateFactory extends TemplateFactory
 		$template->setTranslator($this->getTranslator());
 		return $template;
 	}
-
 	// <editor-fold defaultstate="collapsed" desc="Getters & Setters">
 
 	/**
@@ -62,8 +59,7 @@ class TranslatableTemplateFactory extends TemplateFactory
 	 */
 	public function getTranslator()
 	{
-		if ($this->translator === NULL)
-		{
+		if ($this->translator === NULL) {
 			throw new InvalidStateException('Translator have to be set');
 		}
 		return $this->translator;
@@ -78,13 +74,11 @@ class TranslatableTemplateFactory extends TemplateFactory
 	 */
 	public function setTranslator(ITranslator $translator = NULL)
 	{
-		if ($this->translator !== NULL)
-		{
+		if ($this->translator !== NULL) {
 			throw new InvalidStateException('Translator has already been set');
 		}
 		$this->translator = $translator;
 		return $this;
 	}
-
 	// </editor-fold>
 }

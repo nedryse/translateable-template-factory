@@ -17,14 +17,18 @@ class TranslatableTemplateFactoryTest extends PHPUnit_Framework_TestCase
 
 		/* @var $latteMock Latte\Engine */
 		$latteMock = $this->getMockBuilder('Latte\Engine')
-			->setMethods(array('addFilter', 'getFilters'))
+			->setMethods(array('addFilter', 'getFilters', 'addProvider'))
 			->getMock();
 		$latteMock->expects($this->once())
 			->method('getFilters')
 			->will($this->returnValue(array()));
-		$latteMock->expects($this->at(12))
+		$latteMock->expects($this->at(15))
 			->method('addFilter')
-			->with($this->equalTo('translate'), $this->equalTo(array($translatorMock, 'translate')))
+			->with($this->equalTo('translate'), $this->equalTo(function () use ($translatorMock) {
+					$translatorMock->expect($this->once())
+					->method('translate')
+					->will($this->returnValue(NULL));
+				}))
 			->will($this->returnSelf());
 		$latteMock->onCompile = array();
 
@@ -36,7 +40,7 @@ class TranslatableTemplateFactoryTest extends PHPUnit_Framework_TestCase
 			->method('create')
 			->will($this->returnValue($latteMock));
 
-		$class = new TranslatableTemplateFactory($latteFactroyMock, NULL, NULL, NULL, NULL, $translatorMock);
+		$class = new TranslatableTemplateFactory($latteFactroyMock, NULL, NULL, NULL, $translatorMock);
 		$this->assertInstanceOf('Nette\Bridges\ApplicationLatte\Template', $class->createTemplate($controlMock));
 	}
 
@@ -48,7 +52,7 @@ class TranslatableTemplateFactoryTest extends PHPUnit_Framework_TestCase
 		/* @var $translatorMock ITranslator */
 		$translatorMock = $this->getMock('Nette\Localization\ITranslator');
 
-		$class = new TranslatableTemplateFactory($latteFactroyMock, NULL, NULL, NULL, NULL, $translatorMock);
+		$class = new TranslatableTemplateFactory($latteFactroyMock, NULL, NULL, NULL, $translatorMock);
 		$this->assertInstanceOf('Nette\Localization\ITranslator', $class->getTranslator());
 	}
 
@@ -77,8 +81,7 @@ class TranslatableTemplateFactoryTest extends PHPUnit_Framework_TestCase
 		/* @var $translatorMock ITranslator */
 		$translatorMock = $this->getMock('Nette\Localization\ITranslator');
 
-		$class = new TranslatableTemplateFactory($latteFactroyMock, NULL, NULL, NULL, NULL, $translatorMock);
+		$class = new TranslatableTemplateFactory($latteFactroyMock, NULL, NULL, NULL, $translatorMock);
 		$class->setTranslator($translatorMock);
 	}
-
 }
